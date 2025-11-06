@@ -14,17 +14,17 @@ function transformStateWithClones(state, actions) {
     switch (action.type) {
       case 'addProperties':
         addProps(interimState, action.extraData);
-        result.push(Object.assign({}, interimState));
         break;
       case 'removeProperties':
         removeProps(interimState, action.keysToRemove);
-        result.push(Object.assign({}, interimState));
         break;
       case 'clear':
         clearProps(interimState);
-        result.push(Object.assign({}, interimState));
+        break;
+      default:
         break;
     }
+    result.push(Object.assign({}, interimState));
   }
 
   return result;
@@ -37,8 +37,8 @@ function addProps(targetObj, sourceObj) {
 }
 
 function removeProps(targetObj, sourceObj) {
-  for (const key in sourceObj) {
-    delete targetObj[sourceObj[key]];
+  for (const key of sourceObj) {
+    delete targetObj[key];
   }
 }
 
